@@ -1,0 +1,191 @@
+
+
+1. D:\class\server 폴더 생성
+2. 이클립스 실행 > 1번 폴더 워크스페이스 지정
+3. 인코딩 설정
+    - Window > Preferences > "encoding" 검색
+    a. General > Workspace > Text file encoding > Other > "UTF-8"
+    b. Web > CSS Files > Encoding > "UTF-8"
+    c. Web > HTML Files > Encoding > "UTF-8"
+    d. Web > JSP Files > Encoding > "UTF-8"
+4. 톰캣 다운로드 + 설치
+   - 이전 수업에서 설치했음. 안되있으면 설치(이전 설치된 버전이 8.5.XX 라면 문제 없음)
+   a. https://tomcat.apache.org/download-80.cgi > "64-bit Windows zip" 다운로드
+   b. "64-bit Windows zip" 압축 해제 > "apache-tomcat-8.5.68" 폴더를 C드라이브 루트로 이동 > "C:\apache-tomcat-8.5.68"
+5. 이클립스 + 톰캣 연동
+   - 이전 수업에서 설치했음. 안되있으면 설치
+   - Window > Preferences > "runtime" 검색 > Server > Runtime Environments > "Add" 버튼 클릭
+     > "Apaceh Tomcat v8.5" 선택 > Next > "Browse" 버튼 클릭 > "C:\apache-tomcat-8.5.68" 폴더 선택
+     > "Finish" 버튼 클릭 > "Apply and Close" 버튼 클릭
+   - Window > Show View > Servers 선택 >  "No severs ara available   ." 클릭 > "Apaceh Tomcat v8.5" 선택 > Next
+     > "Finish" 버튼 클릭
+   - Servers 창의 "Tomcat v8.5" 더블클릭 > "Ports" > "HTTP/1.1" Port Number > "8080"을 "8090" 으로 수정 > 저장(Ctrl+S)
+6. 프로젝트 생성
+   a. File > New > Other > Web > Dynamic Web Project 선택 > Next
+   b. Project name > "ServletTest" > Next > Finish
+
+
+
+
+Dynamic Web Project 구조
+
+1. JAX-WS Web Services : 사용 안함
+2. Java Resources(*************)
+	- 자바 파일을 저장하는 폴더(*.java)
+	- src : 패키지 + 소스파일
+3. JavaScript Resoureces : 사용안함
+4. Build : 사용안함
+5. src > main > webapp (***************)
+	- 브라우저를 통해서 요청하는 모든 리소스의 루트 폴더
+	- *html, *css, *.js, 이미지, 동영상 등..
+	- META-INF : 사용안함
+	- WEB-INF : 서버 설정과 관련된 파일을 저장(외부에서 접근이 불가능 하다. 보안상의 이유로)
+		a. lib: *.jar 저장 폴더(콘솔 프로젝트의 Build Path와 동일한 역할)
+		b. web.xml : 서버를 운영하는데 관련한 설정을 저장하는 XML 파일
+		
+		
+Hello.java
+- Hello 자바 클래스를 사용해서 브라우저가 보게될 HTML 페이지를 동적(****)으로 만들었다.
+- 서블릿이라는 기술을 사용했다 > 서블릿은 동적으로 웹페이지를 만드는 기술이다.
+
+		
+
+		
+Servlet, 서블릿
+- (서버측) 기술, Server-side Programming
+- 자바를 사용해서 동적으로 웹페이지를 만드는 기술
+- 자바 진영에서 처음으로 시도한 웹 서버 기술
+- Server + Applet 합성어
+
+
+서버측 기술
+1. CGI
+
+2. PHP
+	- C 기반 스크립트 언어
+	- 개인사이트 제작용 > 기업용 많이 사용
+
+3. ASP
+	- PHP 유사
+	- MS 스크립트 언어(VBScript)
+	
+4. ASP.NET
+ 	- ASP의 버전업
+ 	- C# 사용(VB.NET)
+ 	- 현역
+
+5. JSP, Java Server Page
+	- MS ASP의 자바버전
+	- Java사용
+	
+6. Ruby on Rails
+	- 일본
+
+7. Node.js
+	- ****
+	- 웹서버 제작용 자바스크립트
+
+8. Python
+	- 파이썬(빅데이터, AI)
+	- Django
+
+. Spring
+	- 자바 Servlet + JSP > 버전업
+	- 자바 기반의 웹 프에미워크
+
+
+
+
+Servlet Class, 서블릿 클래스
+- Hello.java
+- 순수 자바 클래스를 기반으로 웹 어플리케이션(웹사이트, 웹페이지)를 제작하는 기능을 추가한 클래스
+
+
+
+
+
+Servlet Class 작성 규칙
+- 해당 규칙을 준수하여 클래스를 작성해야만 서블릿 클래스의 역할을 할 수 있고
+  WAS에 의해서 관리/운영될 수 있다.
+1. 서블릿 클래스 선언
+	a. javax.servlet.Servlet 인터페이스를 구현한다.(복잡함) -> 잘 안씀
+	a. javax.servlet.http.HttpServlet 클래스를 상속한다.(간편함) -> 주로 사용함
+
+
+2. doGet/doPost 메소드 선언
+	- 둘 중 하나 or 둘다 선언 필요
+	- 둘 중 하나라도 없으면 서블릿이 아님.(알바생이 X)
+	- 클라이언트(브라우저)의 요청이 들어오면, 서버측에서 자동으로 이 메소드가 실행된다.(일종의 이벤트 메소드이자 콜백 메소드)
+	- 동적으로 HTML 페이지를 생성하는 역할의 메소드(************)
+	- 메소드 작성 규칙 
+		a. 매개변수 작성(2개)
+			1. javax.servlet.http.HttpServletRequest
+			2. javax.servlet.http.HttpServletResponse
+		b. 예외 미루기(2개)
+			1. java.io.IOException : 페이지를 동적으로 만드는 작업(입출력 발생)
+			2. javax.servlet.ServletException : 서블릿과 관련 예외 처리
+			
+
+3. 동적 HTML 문서 작성 구현
+	a. HttpServletResponse 객체의 getWriter() 메소드 호출 > PrintWriter 객체 반환
+	b. PrintWrite 객체의 printXXX(), write()등의 메소드를 보유
+		> 이 메소드를 작성해서 브라우저에게 돌려줄 HTML 페이지 소스를 작성합니다.
+		
+
+
+
+4. 가상 주소 매핑
+
+
+
+
+
+
+
+
+
+페이지 2장
+	- A 페이지, B페이지
+	- A페이지 -> 사용자 키보드 입력 -> (전송) -> B페이지 -> 데이터 수신 + 가공 + 화면 출력
+	- 데이터 주고 받기(***)
+	- 데이터 입력받아 전송하는 알바생: Ex03_Send.java
+	- 데이터를 수신해서 처리하는 알바생: Ex03_Receive.java
+
+
+
+
+
+
+
+서버 수업
+1. Servlet
+	- 오늘 수업, 1세대 기술
+	- 클라이언트 작업 환경 불편
+	- 여러 문제점
+	
+2. JSP
+	- 2세대 기술
+	- Servlet 계승 + Servlet 문제점 개선
+	- 여러 문제점 
+	
+	
+3. Servlet/JSP
+	- 1세대 기술 + 2세대 기술
+	- 서로 단점 보완해서 안정성 높힘
+	- 전성기
+	- 이 파트를 중심으로 수업
+	
+-------------------------------------------------	
+
+4. Spring
+
+
+
+
+
+
+
+
+
+
+
