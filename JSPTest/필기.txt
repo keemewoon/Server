@@ -1,0 +1,298 @@
+
+JSP, Java Server Pages
+- 자바를 사용해서 서버에 페이지를 만드는 기술
+- 클라이언트의 요청에 따라 서버에서 페이지를 동적으로 만드는 기술
+- Servlet 기술의 다음 버전
+
+
+Servlet 장점
+- Java를 사용한다.
+ 
+Servlet 단점
+- HTML, CSS, JavaScript를 작성하기 힘들다 > 모두 문자열 취급
+- Java 베이스 + 클라이언트  코드
+- Java 베이스 > 웹 요청 불가능 > 가상 주소 매핑(*.do)
+
+JSP 장점
+- HTML, CSS, JavaScript를 작성하기 쉽다.
+- HTML 베이스 + Java 코드 > 개발자 작업 편의성 높다.
+- HTML 베이스 > 웹 요청 가능 > 가상 주소 매핑 불필요
+
+JSP 단점
+- HTML 베이스 > Java 작업 불편
+
+
+
+작업 파일
+1. src/main/java
+	- [소스폴더]
+	- 모든 패키지
+	- 모든 *.java
+
+2. src/main/webapp
+	- [루트폴더] or [웹 루트 폴더] or [컨텐츠 루트 폴더]
+	- 모든 리소스(*.html, *.css, *.js, 이미지, 동영상 등 ..)
+	- JSP 페이지 (*.jsp)
+	
+	
+JSP 기본 요소
+1. JSP 지시자(지시어), JSP Directive
+2. 스크립트 요소, Scripting Elements
+3. 액션 태그, Action Tags
+
+Sevlet/JSP 컨테이너
+- Servlet과 JSP를 해석하고 실행하는 프로그램
+- Tomcat
+- WAS(Web Application Server) : 서버에서 특정언어(Java)를 처리하고 웹사이트를 만드는 일을 하는 프로그램
+- Web Application == Web Site
+
+
+1. JSP 지시자(지시어), JSP Directive
+- <%@ XXX %>
+- JSP 페이지를 실행하기 위해 JSP 컨테이너(실행기)에게 해당 JSP페이지를 처리하기위한 여러가지 환경설정을 한다.
+	a. page 지시자
+	b. include 지시자
+	c. tablib 지시자
+	
+	
+2. 스크립스 요소, Scripting Elements
+- <% %>
+- 자바를 사용할수 있게 된다.
+- 서블릿과 유사한 작업환경을 만들어 준다.
+	a. 스크립틀릿, Scriptlet
+	b. 익스프레션, Expression
+	c. 선언부, Declaration
+	
+
+
+2.5 내장 객체
+
+
+	
+3. 액션 태그, Action Tags
+- <jsp:XXX>, <c:XXX>
+- JSP에서 만들어낸 태그
+- HTML 태그: 정적, 표현 목적
+- JSP 태그: 동적, 프로그래밍 기능 목적
+- ex) <c:if>, <c:for>
+	a. JSP 기본 액션태그
+	b. JSTL 확장 액션태그
+	c. 사용자 정의 액션태그
+
+
+
+1. JSP 지시자(지시어), JSP Directive
+	page 지시자
+	- <% page XXX %>
+	- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+		1. language="java"
+			- JSP 페이지에서 사용할 프로그래밍 언어 지정
+			- Java언어만 쓸 수 있다(거의 형식적)
+			
+		2. contentType="text/html; charset=UTF-8" 
+			- 현재 페이지의 콘텐츠에 대한 기술
+			- text/html, text/plain, image/JPEG, image/gif, applcation/json, text/xml : MIME(Multipurpose Internet Mail Extensions)
+			
+		3. pageEncoding="UTF-8"
+			- UTF-8: 브라우저에게 돌려줄 페이지의 인코딩을 저장(***)
+		
+		4. import="java.util.Random"
+			- 패키지 or 클래스 참조
+			- 자바의 import 동일한 역학
+			
+		5. errorPage
+			- 에러 페이지로 사용할 페이지의 URL을 지정
+			
+			
+	상태 코드, Status Code
+	- 브라우저 <-요청(응답)-> 웹서버 
+	- 콘텐츠 전달 + 상태 코드 전달
+	- 브라우저와 웹서버간의 현재 상태를 식별하기 위한 코드
+		1. 1XX
+		2. 2XX
+			a. 200 OK
+				- 성공했습니다. (많이 사용되지만 우리는 못봄 성공하면 페이지가 보여서)
+		3. 3XX
+			- 리 다이렉트
+		----------------------------화면 출력X
+		
+		----------------------------화면 출력O
+		4. 4XX
+			- 클라이언트 오류(브라우저 실수)
+			a. 401 Unauthorized : 인증 오류
+			b. 403 Forbidden : 서버가 요청 거부(권한)
+			c. 404 Not Found : 요청한 리소스가 없다.(URL 틀림)
+			d. 405 Method Not Allowed : 요청 방식과 응답 방식이 서로 다를 때(GET, POST)
+			e. 408 Request Timeout : 요청 시간 만료
+			
+		5. 5XX
+			- 서버 오류(개발자 실수)
+			a. 500 Internal Server Error : 서버 작업 중 오류 발생(자바, 오라클 에러 등..)
+			
+
+
+
+	b. include 지시자
+		- <%@ include file="URL" %>
+		- 특정 JSP/HTML 페이지를 현재 JSP 페이지의 일부 영역에 삽입
+		- <iframe>유사
+		- 페이지의 일부로 삽입되기 때문에, 부모 페이지와 중첩되면 안되는 코드가 있는지 항상 확인한다!!!(<html>, <body>..)
+	
+	
+	c. taglib 지시자
+		- 액션 태그와 관련된 요소
+	
+
+
+
+
+
+2. 스크립스 요소, Scripting Elements
+	스크립틀릿, Scriptlet
+		- Script + Applet(웹 페이지에 삽입되는 프로그램, ActiveX, Flash)
+		- <% %>
+		- 이 영역은 자바 영역이다. (*.java 파일이라고 생각하고 코딩하면 된다.)
+		- 역할: 비즈니스 코드 작업
+			a. 데이터 처리
+			b. 동적 HTML 처리(CSS, JavaScript) 처리
+	- 사용 빈도 높음
+	
+	익스프레션, Expression
+		- <%= 값 %>
+		- 값: 상수, 변수, 메소드 반환값 등..
+		- System.out.print() 와 비슷한 역할
+		- 출력 목적: 화면에 무언가를 보이기 하기 위해서가 아님(X)
+		- 출력 목적: HTML 소스의 일부를 작성하기 위해서(*************************)
+	
+	선언부, Declaration
+		- <%! %>
+		- 현재 JSP페이지에서 사용할 멤버 변수와 멤버 메소드를 선언하는 영역
+		- 잘 사용한함 > 대신 사용하는 방법이 따로 있음
+		
+		
+		
+		
+		
+		
+JSP 내장 객체, JSP Implicit Object
+- 개발자가 직접 생성하지 않아도, JSP가 미리 만들어서 제공하는 객체(톰캣이 만듦)
+- 예약어를 사용해서 얻어온다.
+- JSP 내장 객체는 Servlet에도 동일하게 있다. 단 Servlet에서는 직접 만들어서 사용한다.(내장 객체라는 형식이 존재하지 않아서)
+- request, response, session, pageContext, out, application, config, page, exception ...
+- request, response, session, pageContext >> out, application >> config, page, exception ...
+
+
+JSP 내장 객체 저장소
+- request, session, pageContext, application
+- 내부에 사용자 데이터를 저장할 수 있는 Map을 가지고 있다.(****)
+- setAttribute(key, value), getAttribute(key)
+
+a. request
+	a.1 클라이언트(브라우저)가 서버에게 전송한 데이터를 받아오는 기능(****)
+	- ex06_from.jsp
+	- ex06_ok.jsp
+	
+	a.2 클라이언트(브라우저)가 서버에게 전송한 데이터의 인코딩 처리
+	a.3 클라이언트(브라우저)가 서버에게 페이지 요청시 관련된 정보 가져오기
+
+
+
+
+
+b. response
+	b.1 돌려줄 웹 페이지를 제작 > response.getWriter() > PrintWriter
+	b.2 돌려줄 웹 페이지 인코딩 > response.setCharactorEncoding("UTF-8")
+	b.3 돌려줄 내용의 MIME 지정(text/html)
+	b.4 페이지 이동하기 
+	
+	- ex09_response_one.jsp
+	- ex09_response_two.jsp
+	
+
+c. pageContext
+	- 페이지 실행에 필요한 컨텍스트 정보를 저장한 객체
+	- 페이지간의 데이터를 전달할 때 사용
+	- 데이터 저장
+	
+	- ex10_pagecontext_one.jsp
+	- ex10_pagecontext_two.jsp
+	
+	
+d. out
+	- 응답 페이지 전송을 위한 출력 스트림 객체
+	- 서블릿의 PrintWriter와 유사한 역할
+	- HTML 소스에 값을 출력하는 역할
+	- *** jsp에서 <%= %>을 사용하면 불가항력으로 스파게티 코드가 자주 발생한다. > 가독성 저하
+		> 차라리 옛날 서블릿 방식으로 돌아가자. 가독성 향상
+	
+	- ex11_out.jsp
+	
+e. session
+	- *********
+	- 데이터 저장
+	- 인증 상태를 저장하는 용도로 사용(********)
+	
+	
+	- ex12_session.jsp
+	- ex13_one.jsp
+	- ex13_two.jsp
+	
+	
+f. application
+	- 데이터 저장
+	
+	
+내장 객체의 생명 주기
+- pageContext, request(rsponse), session, application
+- 사용자 데이터를 저장하는 동일한 기능을 가지지만, 생명주기가 다르기 때문에 저장할 데이터의 쓰임새에 따라서 내장 객체 선택해서 사용
+1. pageContext: 한페이지 요청 -> 응답할때까지
+2. request(response) : 한 페이지 요청 ->  응답할때까지 단, forward이동할때는 응답전까지 살아있음
+3. session: 유저 접속 -> 해제할때까지
+4. application : 첫 유저 접속 -> 마지막 유저 해제할 때까지
+	
+	
+	
+
+3. 액션 태그, Action Tags
+	a. JSP 기본 액션 태그
+		- 프로그래밍 기능의 일부를 태그형태로 구현
+		- 추가 설치 과정 없이 바로 사용 가능
+		- ex14_one.jsp
+		- ex14_two.jsp
+		
+	b. JSTL 확장 액션 태그
+		- JSP 기본 액션 태그의 버전업
+		- 추가 설치가 필요
+		- ex15_el.jsp
+		- ex15_jstl.jsp
+		
+	c. 사용자 정의 액션 태그
+	 	-JSP 기본 액션태그 or
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
