@@ -302,7 +302,119 @@ webapp > "files" 폴더 생성(사용자가 업로드한 파일들을 저장할 
 
 
 
+JSP에서 코드를 작성하는 패턴
+1. JSP Model 1
+	- 지금까지 수업한 방식
+	- HTML + CSS + JavaScript + Java +JSP = *.jsp
+	- <% %>, <%= %> 사용
 
+2. JSP Model 2
+	- MVC 디자인 패턴
+	- Servlet + JSP = MVC
+
+
+JSP MVC
+- Servlet
+	a. 자바 기반 + 웹추가
+	b. 자바 작업이 수월하다.
+	c. 웹 작업이 불편하다.
+
+- JSP
+	a. 웹 기반 + 자바추가
+	b. 웹 작업 수월하다.
+	c. 자바 작업이 불편하다.
+
+- servlet + JSP
+	a. 자바 코드 -> Servlet 담당
+	b. 웹 코드 -> JSP 담당
+
+
+웹 페이지를 만드는 알바생
+1. Servlet
+	- 1개의 Servlet -> 1장의 웹페이지 생성
+
+2. JPS
+	- 1개의 JSP -> 1장의 웹페이지 생성
+
+
+
+JSP Model2 -> Hello 만들기
+- 알바생 2명 -> 협력 -> 1장의 웹페이지 생성 ///*****
+
+1. Servlet
+	- com.test.mvc > Hello.java
+
+2. JSP
+	- webapp > mvc > hello.jsp
+
+- 알바생 2명의 업무 순서가 이미 정해져 있다.(억지로 바꿀순 있는데 절대 안바꿈 == 공식)
+	 a. 브라우저가 페이지를 달라고 서버에 먼저 요청한다.
+	 	-> Servlet을 부른다.
+
+	 b. Servlet이 먼저 일을 한다.
+	 	-> 할일 완료
+	 	-> JSP를 호출한다.
+
+	 c. JSP가 Servlet을 이어서 나머지 일을 한다.
+	 	-> 할일 완료
+	 	-> 웹 페이지 완성
+
+	 d. 완성된 페이지를 브라우저에게 돌려준다.
+
+
+주소록 MVC 버전
+1. 주소록 목록보기(R)
+2. 주소록 추가하기(C)
+-------------------------
+3. 주소록 수정하기(U)
+4. 주소록 삭제하기(D)
+
+
+파일 생성
+
+select
+	: List -> Edit
+
+insert
+	: Add, AddOk, => Edit, Edit, EditOk, Del, DelOk
+
+
+
+- com.test.mvc
+	- List.java
+	- Add.java
+	- AddOk.java
+	- Edit.java
+	- EditOk.java
+	- Del.java
+	- DelOk.java
+
+- WEB-INF > views > "address" 폴더 생성
+	- list.jsp
+	- add.jsp
+	- addOk.jsp
+	- edit.jsp
+	- editOk.jsp
+	- del.jsp
+	- delOk.jsp
+
+
+
+
+인증 + MVC Model
+
+웹 보안
+1. 인증, Authentication
+- 현재 접속자가 해당 사이트의 구성원인지를 확인하는 작업
+- 로그인, 로그아웃
+- 목적: 인증과정을 거친 사용자를 인증과정을 거치지 않은 사용자와 구분할 수 있어야 한다.(****)
+- 일종의 보안카드 > 인증 정보 > 인증 티켓(****): 다른 사용자의 인증 티켓은 절대로 볼 수 없다. 모든 페이지에서 유효해야 한다.
+	-> 세션(session)에 정보를 저장한다.
+
+
+2. 허가, Authorization
+- 어떤 업무에 대해서 현재 접속자가 권한이 있는지 확인하는 작업
+-
 
 
 
